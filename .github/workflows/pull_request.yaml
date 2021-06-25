@@ -2,15 +2,16 @@ name: build
 on:
   pull_request
 jobs:
-  checkov-job:
+  bridgecrew-job:
     runs-on: ubuntu-latest
-    name: checkov-action
+    name: bridgecrew-action
     steps:
       - name: Checkout repo
         uses: actions/checkout@v2
 
-      - name: Run Checkov action
-        id: checkov
-        uses: bridgecrewio/checkov-action@master
+      - name: Run Bridgecrew action
+        id: bridgecrew
+        uses: bridgecrewio/bridgecrew-action@master
         with:
+          api-key: ${{ secrets.BRIDGECREW_API_KEY }}
           directory: terraform/
