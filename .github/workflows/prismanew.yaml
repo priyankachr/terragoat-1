@@ -1,4 +1,4 @@
-name: PrismaScan
+name: PrismaScannew
 on: [ pull_request ]
 
 jobs:
