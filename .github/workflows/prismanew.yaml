@@ -1,0 +1,24 @@
+name: PrismaScan
+on: [ pull_request ]
+
+jobs:
+  prisma_cloud_iac_scan:
+    runs-on: ubuntu-latest
+    name: Run Prisma Cloud IaC Scan to check 
+    steps:
+      - name: Checkout repo
+        uses: actions/checkout@v2
+      - name: Run Prisma 
+        id: Bridgecrew
+        uses: bridgecrewio/bridgecrew-action@master 
+        env:
+          PRISMA_API_URL: https://api.uk.prismacloud.io
+        with:
+          api-key: ${{ secrets.BC_API_KEY }}
+      - name: Upload scan result artifact
+        uses: actions/upload-artifact@v2
+        if: success() || failure()
+        with:
+          name: iac_scan_result
+          path: ${{ steps.iac-scan.outputs.iac_scan_result_path }}
+          
